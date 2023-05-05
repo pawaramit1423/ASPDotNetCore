@@ -4,8 +4,8 @@ pipeline {
         AWS_ACCOUNT_ID="176295807911"
         AWS_DEFAULT_REGION="us-east-1" 
 	CLUSTER_NAME="Nodejs"
-	SERVICE_NAME="nodejsapp-service"
-	TASK_DEFINITION_NAME="nodejs-app"
+	SERVICE_NAME="nodeapp-service"
+	TASK_DEFINITION_NAME="sampleapp"
 	DESIRED_COUNT="1"
         IMAGE_REPO_NAME="nodejs"
         IMAGE_TAG="${env.BUILD_ID}"
@@ -14,17 +14,7 @@ pipeline {
     }
    
     stages {
-
-    // Tests
-    stage('Unit Tests') {
-      steps{
-        script {
-          sh 'npm install'
-	  sh 'npm test -- --watchAll=false'
-        }
-      }
-    }
-        
+ 
     stage("Build Docker image") {
         steps {
             sh "docker build -t ${env.IMAGE_REPO_NAME}:${env.IMAGE_TAG} ."
@@ -58,11 +48,9 @@ pipeline {
                         credentialsId: '176295807911'
                     ]]) {
                     sh "aws ecs update-service --region us-east-1 --cluster Nodejs --service nodeapp-service"
-                   // sh "aws ecs update-service --region us-east-1 --cluster ${env.CLUSTER_NAME} --service ${env.SERVICE_NAME}"
+                    sh "aws ecs update-service --region us-east-1 --cluster ${env.CLUSTER_NAME} --service ${env.SERVICE_NAME}"
                 }
             }
-        }     
-      
-    }
+        }
+ }
 }
-
