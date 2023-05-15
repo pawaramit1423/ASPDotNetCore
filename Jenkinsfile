@@ -7,7 +7,7 @@ pipeline {
                 // Build the .NET Core application using MSBuild
                 msbuild (
                     msBuildName: 'MSBuild',
-                    solutionFile: 'MyApp.sln'
+                    solutionFile: 'dotnetcore.sln'
                 )
             }
         }
@@ -16,9 +16,9 @@ pipeline {
             steps {
                 // Deploy the application to Azure App Service using the Azure App Service Plugin
                 azureWebAppPublish (
-                    credentialsId: 'azure-credentials',
-                    resourceGroup: 'my-resource-group',
-                    appName: 'my-app-name',
+                    credentialsId: '50192942-3704-44bf-ae70-93d354368d0b',
+                    resourceGroup: 'Dev_Grafana',
+                    appName: 'cicddotnet',
                     filePath: '**/*.zip',
                     deployToSlotOrASE: false
                 )
