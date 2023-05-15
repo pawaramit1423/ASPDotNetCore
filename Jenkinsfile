@@ -7,7 +7,7 @@ pipeline {
                 // Build the .NET Core application using MSBuild
                 msbuild (
                     msBuildName: 'MSBuild',
-                    solutionFile: 'dotnetcore.sln'
+                    msBuildFile: 'dotnetcore.sln'
                 )
             }
         }
